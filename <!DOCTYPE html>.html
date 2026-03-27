@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="node.js"></script>
+    <title>PoisonInk - Proteja sua arte contra IA</title>
+    
+    <!-- Tailwind CSS (CDN) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Ícones Lucide (CDN) -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <!-- Fonte Inter (Google Fonts) -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Configuração do Tailwind JIT -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            dark: '#0F0F14',
+                            blue: '#2B2D6E',
+                            purple: '#7A5CFF',
+                            cyan: '#35F2E1'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            background-color: #222269;
+            color: white;
+            -webkit-font-smoothing: antialiased;
+        }
+        
+        ::selection { 
+            background-color: rgba(56, 11, 11, 0.1); 
+            color: white; 
+        }
+        
+        /* Animações e Efeitos */
+        .aurora-pulse { animation: pulse 8s cubic-bezier(0.4, 0, 0.6, 1) infinite; }
+        
+        @keyframes spin-slow { 100% { transform: rotate(360deg); } }
+        @keyframes spin-slow-reverse { 100% { transform: rotate(-360deg); } }
+        .animate-spin-slow { animation: spin-slow 30s linear infinite; }
+        .animate-spin-slow-reverse { animation: spin-slow-reverse 40s linear infinite; }
+        
+        /* Fade in para scroll */
+        .fade-in-up {
+            animation: fadeInUp 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        
+        @keyframes fadeInUp {
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body class="min-h-screen relative overflow-x-hidden">
+    
+    <!-- Navegação -->
+    <nav id="navbar" class="fixed top-0 left-0 right-0 z-50 transition-all duration-500 bg-transparent py-6 border-b border-transparent">
+        <div class="max-w-7xl mx-auto px-6 md:px-12 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <!-- Para usar sua logo local: altere o src abaixo para o caminho da sua imagem (ex: "logo.png") -->
+                <div class="w-8 h-8 flex items-center justify-center overflow-hidden">
+                    <img src="img/l0g0.png" alt="Logo" class="w-full h-full object-contain mix-blend-screen opacity-80" onerror="this.style.display='none'">
+                </div>
+                <span class="text-sm font-semibold tracking-widest text-white uppercase">PoisonInk</span>
+            </div>
+            <div class="hidden md:flex items-center gap-10 text-xs font-medium text-white/50 tracking-wide uppercase">
+                <a href="#problema" class="hover:text-white transition-colors duration-300">O Problema</a>
+                <a href="#solucao" class="hover:text-white transition-colors duration-300">Como Funciona</a>
+                <a href="#publico" class="hover:text-white transition-colors duration-300">Para Quem</a>
+            </div>
+            <button class="hidden md:flex items-center gap-2 text-xs font-semibold uppercase tracking-wider bg-white text-[#0F0F14] px-6 py-3 rounded-full hover:bg-white/90 transition-all hover:scale-105">
+                Proteger Arte
+            </button>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="relative min-h-[100vh] flex items-center justify-center pt-24 pb-12 overflow-hidden bg-brand-dark">
+        <!-- Aurora Background -->
+        <div class="absolute inset-0 z-0 overflow-hidden pointer-events-none">
+            <div class="absolute -top-[20%] -left-[10%] w-[70%] h-[70%] rounded-full bg-gradient-to-br from-[#2B2D6E]/40 to-[#7A5CFF]/20 mix-blend-screen filter blur-[120px] opacity-60 aurora-pulse"></div>
+            <div class="absolute top-[40%] -right-[20%] w-[60%] h-[60%] rounded-full bg-gradient-to-tl from-[#35F2E1]/20 to-[#7A5CFF]/10 mix-blend-screen filter blur-[150px] opacity-50"></div>
+            <div class="absolute bottom-0 left-[20%] w-[50%] h-[50%] rounded-full bg-gradient-to-t from-[#0F0F14] to-transparent z-10"></div>
+        </div>
+        
+        <div class="max-w-7xl mx-auto px-6 md:px-12 relative z-10 w-full flex flex-col items-center text-center mt-12 fade-in-up" style="animation-delay: 0.1s">
+            <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-white/10 bg-white/5 backdrop-blur-md mb-8">
+                <span class="w-2 h-2 rounded-full bg-brand-cyan animate-pulse"></span>
+                <span class="text-xs font-medium text-white/80 uppercase tracking-widest">Proteção Ativa contra IA</span>
+            </div>
+
+            <h1 class="text-5xl md:text-8xl font-bold text-white mb-8 leading-[1.05] tracking-tighter max-w-5xl">
+                Proteja sua arte <br />
+                <span class="text-transparent bg-clip-text bg-gradient-to-r from-white via-white/80 to-white/40">antes de publicar.</span>
+            </h1>
+
+            <p class="text-lg md:text-xl text-white/50 max-w-2xl mx-auto mb-12 leading-relaxed font-light">
+                PoisonInk aplica uma camada de proteção invisível, projetada para dificultar o uso indevido da sua identidade visual por sistemas de inteligência artificial.
+            </p>
+
+            <div class="flex flex-col sm:flex-row gap-6 items-center">
+                <button class="group relative flex items-center gap-3 px-8 py-4 bg-white text-[#0F0F14] rounded-full font-semibold text-sm uppercase tracking-wide overflow-hidden hover:scale-105 transition-all duration-300">
+                    <span>Começar agora</span>
+                    <i data-lucide="arrow-up-right" class="w-4 h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform"></i>
+                </button>
+                
+                <button class="group flex items-center gap-3 px-8 py-4 bg-transparent text-white rounded-full font-semibold text-sm uppercase tracking-wide border border-white/10 hover:bg-white/5 transition-all duration-300">
+                    <span>Saiba mais</span>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- O Problema Section -->
+    <section id="problema" class="py-32 relative z-10 bg-brand-dark">
+        <div class="max-w-7xl mx-auto px-6 md:px-12">
+            <div class="mb-20 max-w-3xl fade-in-up">
+                <h2 class="text-4xl md:text-6xl font-semibold text-white mb-6 tracking-tighter leading-tight">
+                    A IA aprende com o seu esforço. <span class="text-white/30">Sem permissão.</span>
+                </h2>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- Card 1 -->
+                <div class="relative group rounded-3xl bg-[#141419] border border-white/[0.04] p-8 md:p-10 overflow-hidden hover:bg-[#18181E] transition-colors duration-500 fade-in-up" style="animation-delay: 0.1s">
+                    <div class="w-12 h-12 rounded-full bg-white/5 flex items-center justify-center mb-8 border border-white/10 text-white/60">
+                        <i data-lucide="database" class="w-5 h-5"></i>
+                    </div>
+                    <h3 class="text-2xl font-medium text-white mb-4 tracking-tight">Scraping em massa</h3>
+                    <p class="text-white/40 text-base leading-relaxed font-light">Bots varrem portfólios e redes sociais diariamente, extraindo imagens em alta resolução para alimentar bases de dados trilionárias.</p>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="relative group rounded-3xl bg-[#141419] border border-white/[0.04] p-8 md:p-10 overflow-hidden hover:bg-[#18181E] transition-colors duration-500 fade-in-up" style="animation-delay: 0.2s">
+                    <div class="w-12 h-12 rounded-full bg-white/5 flex items-center justify-center mb-8 border border-white/10 text-white/60">
+                        <i data-lucide="cpu" class="w-5 h-5"></i>
+                    </div>
+                    <h3 class="text-2xl font-medium text-white mb-4 tracking-tight">Treinamento invisível</h3>
+                    <p class="text-white/40 text-base leading-relaxed font-light">Modelos generativos utilizam obras protegidas por direitos autorais sem qualquer tipo de consentimento, crédito ou compensação financeira.</p>
+                </div>
+
+                <!-- Card 3 -->
+                <div class="relative group rounded-3xl bg-[#141419] border border-white/[0.04] p-8 md:p-10 overflow-hidden hover:bg-[#18181E] transition-colors duration-500 fade-in-up" style="animation-delay: 0.3s">
+                    <div class="w-12 h-12 rounded-full bg-white/5 flex items-center justify-center mb-8 border border-white/10 text-brand-purple">
+                        <i data-lucide="copy" class="w-5 h-5"></i>
+                    </div>
+                    <h3 class="text-2xl font-medium text-white mb-4 tracking-tight">Plágio automatizado</h3>
+                    <p class="text-white/40 text-base leading-relaxed font-light">Estilos únicos que levaram anos para serem aperfeiçoados são replicados em segundos através de simples comandos de texto.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Como Funciona Section -->
+    <section id="solucao" class="py-32 relative z-10 bg-brand-dark">
+        <div class="max-w-7xl mx-auto px-6 md:px-12">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
+                <div class="fade-in-up">
+                    <h2 class="text-4xl md:text-6xl font-semibold text-white mb-8 tracking-tighter leading-tight">
+                        Engenharia reversa contra a clonagem.
+                    </h2>
+                    <p class="text-white/50 text-lg mb-12 leading-relaxed font-light max-w-lg">
+                        Criamos uma camada de defesa em múltiplos níveis aplicada diretamente nos pixels da sua arte. É perfeitamente invisível para humanos, mas completamente caótica para máquinas.
+                    </p>
+
+                    <div class="space-y-10">
+                        <div class="flex gap-6">
+                            <div class="shrink-0 w-12 h-12 rounded-full border border-white/10 flex items-center justify-center bg-[#141419]">
+                                <i data-lucide="shield" class="w-5 h-5 text-white/70"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-xl font-medium text-white mb-2 tracking-tight">Identidade Criptográfica</h4>
+                                <p class="text-white/40 leading-relaxed font-light">Registro imutável da autoria, garantindo que a origem da obra seja sempre rastreável e verificável.</p>
+                            </div>
+                        </div>
+                        <div class="flex gap-6">
+                            <div class="shrink-0 w-12 h-12 rounded-full border border-white/10 flex items-center justify-center bg-[#141419]">
+                                <i data-lucide="fingerprint" class="w-5 h-5 text-white/70"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-xl font-medium text-white mb-2 tracking-tight">Watermark Invisível</h4>
+                                <p class="text-white/40 leading-relaxed font-light">Assinatura digital injetada nos dados que resiste a compressões severas, cortes e edições.</p>
+                            </div>
+                        </div>
+                        <div class="flex gap-6">
+                            <div class="shrink-0 w-12 h-12 rounded-full border border-white/10 flex items-center justify-center bg-[#141419]">
+                                <i data-lucide="wand-2" class="w-5 h-5 text-white/70"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-xl font-medium text-white mb-2 tracking-tight">Perturbação Anti-IA</h4>
+                                <p class="text-white/40 leading-relaxed font-light">Ruído microscópico calculado que destrói a interpretação matemática do seu estilo por redes neurais.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="relative h-[600px] w-full rounded-3xl bg-gradient-to-br from-[#141419] to-brand-dark border border-white/[0.05] overflow-hidden flex items-center justify-center fade-in-up" style="animation-delay: 0.2s">
+                    <div class="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(122,92,255,0.1)_0%,transparent_70%)]"></div>
+                    
+                    <div class="relative z-10 w-64 h-64">
+                        <div class="absolute inset-0 border border-white/10 rounded-full border-dashed animate-spin-slow"></div>
+                        <div class="absolute inset-4 border border-[#35F2E1]/20 rounded-full animate-spin-slow-reverse"></div>
+                        <div class="absolute inset-0 flex items-center justify-center">
+                            <i data-lucide="shield-check" class="w-16 h-16 text-white/30"></i>
+                        </div>
+                    </div>
+
+                    <div class="absolute bottom-8 left-8 right-8 p-4 rounded-2xl bg-white/[0.02] backdrop-blur-md border border-white/5 flex items-center justify-between">
+                        <div class="flex items-center gap-3">
+                            <div class="w-2 h-2 rounded-full bg-brand-cyan animate-pulse"></div>
+                            <span class="text-xs font-mono text-white/50 uppercase tracking-widest">Proteção Ativa</span>
+                        </div>
+                        <span class="text-xs font-mono text-white/30">100% Criptografado</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Publico Section -->
+    <section id="publico" class="py-32 relative z-10 bg-brand-dark">
+        <div class="max-w-7xl mx-auto px-6 md:px-12">
+            <div class="flex flex-col md:flex-row justify-between items-end mb-16 gap-8 fade-in-up">
+                <h2 class="text-4xl md:text-6xl font-semibold text-white tracking-tighter leading-tight max-w-2xl">
+                    Construído para quem vive da própria criatividade.
+                </h2>
+                <p class="text-white/40 max-w-sm text-lg font-light leading-relaxed pb-2">
+                    O controle sobre o destino da sua obra nunca deveria ser opcional.
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-6">
+                <!-- Image Card 1 -->
+                <div class="group relative h-96 rounded-3xl overflow-hidden cursor-pointer fade-in-up" style="animation-delay: 0.1s">
+                    <div class="absolute inset-0 bg-[#141419]"></div>
+                    <img src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=800&auto=format&fit=crop" class="absolute inset-0 w-full h-full object-cover opacity-40 mix-blend-luminosity group-hover:opacity-60 group-hover:scale-105 transition-all duration-700 ease-[0.16,1,0.3,1]" />
+                    <div class="absolute inset-0 bg-gradient-to-t from-[#0F0F14] via-[#0F0F14]/40 to-transparent"></div>
+                    <div class="absolute bottom-8 left-8 right-8 flex items-end justify-between">
+                        <div>
+                            <i data-lucide="palette" class="w-6 h-6 text-white/70 mb-4"></i>
+                            <h3 class="text-2xl font-medium text-white tracking-tight">Artistas Digitais</h3>
+                        </div>
+                        <div class="w-10 h-10 rounded-full border border-white/20 flex items-center justify-center bg-white/5 backdrop-blur-sm group-hover:bg-white group-hover:text-black transition-colors duration-300">
+                            <i data-lucide="chevron-right" class="w-5 h-5"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Image Card 2 -->
+                <div class="group relative h-96 rounded-3xl overflow-hidden cursor-pointer fade-in-up" style="animation-delay: 0.2s">
+                    <div class="absolute inset-0 bg-[#141419]"></div>
+                    <img src="https://images.unsplash.com/photo-1561214115-f2f134cc4912?q=80&w=800&auto=format&fit=crop" class="absolute inset-0 w-full h-full object-cover opacity-40 mix-blend-luminosity group-hover:opacity-60 group-hover:scale-105 transition-all duration-700 ease-[0.16,1,0.3,1]" />
+                    <div class="absolute inset-0 bg-gradient-to-t from-[#0F0F14] via-[#0F0F14]/40 to-transparent"></div>
+                    <div class="absolute bottom-8 left-8 right-8 flex items-end justify-between">
+                        <div>
+                            <i data-lucide="pen-tool" class="w-6 h-6 text-white/70 mb-4"></i>
+                            <h3 class="text-2xl font-medium text-white tracking-tight">Ilustradores</h3>
+                        </div>
+                        <div class="w-10 h-10 rounded-full border border-white/20 flex items-center justify-center bg-white/5 backdrop-blur-sm group-hover:bg-white group-hover:text-black transition-colors duration-300">
+                            <i data-lucide="chevron-right" class="w-5 h-5"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Image Card 3 -->
+                <div class="group relative h-96 rounded-3xl overflow-hidden cursor-pointer fade-in-up" style="animation-delay: 0.3s">
+                    <div class="absolute inset-0 bg-[#141419]"></div>
+                    <img src="https://images.unsplash.com/photo-1558655146-d09347e92766?q=80&w=800&auto=format&fit=crop" class="absolute inset-0 w-full h-full object-cover opacity-40 mix-blend-luminosity group-hover:opacity-60 group-hover:scale-105 transition-all duration-700 ease-[0.16,1,0.3,1]" />
+                    <div class="absolute inset-0 bg-gradient-to-t from-[#0F0F14] via-[#0F0F14]/40 to-transparent"></div>
+                    <div class="absolute bottom-8 left-8 right-8 flex items-end justify-between">
+                        <div>
+                            <i data-lucide="monitor" class="w-6 h-6 text-white/70 mb-4"></i>
+                            <h3 class="text-2xl font-medium text-white tracking-tight">Designers</h3>
+                        </div>
+                        <div class="w-10 h-10 rounded-full border border-white/20 flex items-center justify-center bg-white/5 backdrop-blur-sm group-hover:bg-white group-hover:text-black transition-colors duration-300">
+                            <i data-lucide="chevron-right" class="w-5 h-5"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer / CTA -->
+    <section class="py-32 md:py-48 relative z-10 bg-brand-dark border-t border-white/[0.02] overflow-hidden">
+        <div class="absolute inset-0 bg-[radial-gradient(circle_at_bottom,rgba(43,45,110,0.15)_0%,transparent_60%)] pointer-events-none"></div>
+        
+        <div class="max-w-5xl mx-auto px-6 md:px-12 text-center relative fade-in-up">
+            <h2 class="text-5xl md:text-8xl font-bold text-white mb-8 leading-[1.05] tracking-tighter">
+                Sua arte.<br />
+                <span class="text-white/30">Suas regras.</span>
+            </h2>
+            
+            <p class="text-xl text-white/40 mb-12 max-w-xl mx-auto font-light">
+                Junte-se a milhares de criadores que protegem seu portfólio com tecnologia de ponta.
+            </p>
+
+            <button class="group relative flex items-center justify-center gap-3 px-10 py-5 mx-auto bg-white text-[#0F0F14] rounded-full font-semibold text-sm uppercase tracking-wide overflow-hidden hover:scale-105 transition-all duration-300">
+                <span>Proteger portfólio</span>
+                <i data-lucide="arrow-up-right" class="w-4 h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform"></i>
+            </button>
+        </div>
+        
+        <div class="max-w-7xl mx-auto px-6 md:px-12 mt-32 md:mt-48 flex flex-col md:flex-row items-center justify-between gap-6 border-t border-white/[0.05] pt-8 fade-in-up">
+            <div class="flex items-center gap-3">
+                <span class="text-xs font-semibold tracking-widest text-white/50 uppercase">PoisonInk © 2026</span>
+            </div>
+            <div class="flex gap-6 text-xs text-white/30 font-medium tracking-wide uppercase">
+                <a href="#" class="hover:text-white transition-colors">Termos</a>
+                <a href="#" class="hover:text-white transition-colors">Privacidade</a>
+                <a href="#" class="hover:text-white transition-colors">Contato</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Scripts do site -->
+    <script>
+        // 1. Inicializa os ícones
+        lucide.createIcons();
+
+        // 2. Comportamento dinâmico da Navbar (Scroll)
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                navbar.classList.add('bg-[#0F0F14]/80', 'backdrop-blur-xl', 'border-white/[0.05]', 'py-4');
+                navbar.classList.remove('bg-transparent', 'py-6', 'border-transparent');
+            } else {
+                navbar.classList.add('bg-transparent', 'py-6', 'border-transparent');
+                navbar.classList.remove('bg-[#0F0F14]/80', 'backdrop-blur-xl', 'border-white/[0.05]', 'py-4');
+            }
+        });
+
+        // 3. Animação de Fade Up quando o usuário rola a página
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.1
+        };
+
+        const observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animationPlayState = 'running';
+                    observer.unobserve(entry.target); // Para animar apenas 1x
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.fade-in-up').forEach(el => {
+            el.style.animationPlayState = 'paused';
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>

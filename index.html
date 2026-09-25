@@ -1,205 +1,121 @@
-<!DOCTYPE html>
-<html lang="pt-BR" class="scroll-smooth">
+<!doctype html>
+<html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="node.js"></script>
-    <title>PoisonInk - Proteja sua arte contra IA</title>
-    
-    <!-- Tailwind CSS (CDN) -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    
-    <!-- Ícones Lucide (CDN) -->
-    <script src="https://unpkg.com/lucide@latest"></script>
-    
-    <!-- Fonte Inter (Google Fonts) -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    
-    <!-- Configuração do Tailwind JIT -->
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    fontFamily: {
-                        sans: ['Inter', 'sans-serif'],
-                    },
-                    colors: {
-                        brand: {
-                            dark: '#0F0F14',
-                            blue: '#2B2D6E',
-                            purple: '#7A5CFF',
-                            cyan: '#35F2E1'
-                        }
-                    }
-                }
-            }
-        }
-    </script>
-
-    <style>
-        body {
-            background-color: #222269;
-            color: white;
-            -webkit-font-smoothing: antialiased;
-        }
-        
-        ::selection { 
-            background-color: rgba(56, 11, 11, 0.1); 
-            color: white; 
-        }
-        
-        .aurora-pulse { animation: pulse 8s cubic-bezier(0.4, 0, 0.6, 1) infinite; }
-        
-        @keyframes spin-slow { 100% { transform: rotate(360deg); } }
-        @keyframes spin-slow-reverse { 100% { transform: rotate(-360deg); } }
-        .animate-spin-slow { animation: spin-slow 30s linear infinite; }
-        .animate-spin-slow-reverse { animation: spin-slow-reverse 40s linear infinite; }
-        
-        .fade-in-up {
-            animation: fadeInUp 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-            opacity: 0;
-            transform: translateY(30px);
-        }
-        
-        @keyframes fadeInUp {
-            to { opacity: 1; transform: translateY(0); }
-        }
-    </style>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="PoisonInk adiciona uma camada sutil de obfuscação visual e uma impressão digital verificável antes de você publicar sua arte.">
+  <meta name="theme-color" content="#090b12">
+  <title>PoisonInk — publique com mais controle</title>
+  <link rel="icon" href="assets/logo.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="assets/styles.css">
+  <script src="assets/site.js" defer></script>
 </head>
-
-<body class="min-h-screen relative overflow-x-hidden">
-    
-    <!-- Navegação -->
-    <nav id="navbar" class="fixed top-0 left-0 right-0 z-50 transition-all duration-500 bg-transparent py-6 border-b border-transparent">
-        <div class="max-w-7xl mx-auto px-6 md:px-12 flex items-center justify-between">
-            
-            <div class="flex items-center gap-3">
-                <div class="w-8 h-8 flex items-center justify-center overflow-hidden">
-                    <img src="img/l0g0.png" alt="Logo" class="w-full h-full object-contain mix-blend-screen opacity-80">
-                </div>
-                <span class="text-sm font-semibold tracking-widest text-white uppercase">PoisonInk</span>
-            </div>
-
-            <div class="hidden md:flex items-center gap-10 text-xs font-medium text-white/50 tracking-wide uppercase">
-                <a href="#problema" class="hover:text-white transition-colors duration-300">O Problema</a>
-                <a href="#solucao" class="hover:text-white transition-colors duration-300">Como Funciona</a>
-                <a href="#publico" class="hover:text-white transition-colors duration-300">Para Quem</a>
-            </div>
-
-            <!-- BOTÃO ALTERADO -->
-            <a href="https://art-shield-prime.lovable.app/auth" target="_blank"
-               class="hidden md:flex items-center gap-2 text-xs font-semibold uppercase tracking-wider bg-white text-[#0F0F14] px-6 py-3 rounded-full hover:bg-white/90 transition-all hover:scale-105">
-                Proteger Arte
-            </a>
-
+<body>
+  <a class="skip-link" href="#main">Pular para o conteúdo</a>
+  <header class="site-header">
+    <nav class="nav-wrap" aria-label="Navegação principal">
+      <a class="brand" href="#top" aria-label="PoisonInk, início">
+        <img src="assets/logo.svg" alt="">
+        <span>POISONINK</span>
+      </a>
+      <div class="nav-links" id="navLinks">
+        <a href="#problema" data-i18n="navProblem">O problema</a>
+        <a href="#metodo" data-i18n="navMethod">Como funciona</a>
+        <a href="#limites" data-i18n="navLimits">Transparência</a>
+      </div>
+      <div class="nav-actions">
+        <div class="lang-switch" aria-label="Idioma">
+          <button type="button" data-lang="pt" aria-pressed="true">PT</button>
+          <button type="button" data-lang="en" aria-pressed="false">EN</button>
+          <button type="button" data-lang="es" aria-pressed="false">ES</button>
         </div>
+        <a class="button primary small" href="studio/" data-i18n="openStudio">Abrir estúdio</a>
+        <button class="menu-button" type="button" aria-expanded="false" aria-controls="navLinks" aria-label="Abrir menu">☰</button>
+      </div>
     </nav>
+  </header>
 
-    <!-- Hero -->
-    <section class="relative min-h-[100vh] flex items-center justify-center pt-24 pb-12 overflow-hidden bg-brand-dark">
-
-        <div class="absolute inset-0 z-0 overflow-hidden pointer-events-none">
-            <div class="absolute -top-[20%] -left-[10%] w-[70%] h-[70%] rounded-full bg-gradient-to-br from-[#2B2D6E]/40 to-[#7A5CFF]/20 mix-blend-screen filter blur-[120px] opacity-60 aurora-pulse"></div>
-            <div class="absolute top-[40%] -right-[20%] w-[60%] h-[60%] rounded-full bg-gradient-to-tl from-[#35F2E1]/20 to-[#7A5CFF]/10 mix-blend-screen filter blur-[150px] opacity-50"></div>
+  <main id="main">
+    <section class="hero" id="top">
+      <div class="hero-copy">
+        <p class="eyebrow" data-i18n="eyebrow">Ferramenta experimental para artistas</p>
+        <h1><span data-i18n="heroA">Sua arte.</span><br><span class="gradient-text" data-i18n="heroB">Suas regras.</span></h1>
+        <p data-i18n="heroText">Prepare sua imagem antes de publicar. O PoisonInk cria uma cópia reprocessada com obfuscação visual sutil, remove os metadados originais e gera uma impressão digital verificável — tudo no seu navegador.</p>
+        <div class="hero-actions">
+          <a class="button primary" href="studio/" data-i18n="protectNow">Proteger uma imagem →</a>
+          <a class="button secondary" href="#metodo" data-i18n="understand">Entender o processo</a>
         </div>
-
-        <div class="max-w-7xl mx-auto px-6 md:px-12 relative z-10 w-full flex flex-col items-center text-center mt-12 fade-in-up">
-
-            <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-white/10 bg-white/5 backdrop-blur-md mb-8">
-                <span class="w-2 h-2 rounded-full bg-brand-cyan animate-pulse"></span>
-                <span class="text-xs font-medium text-white/80 uppercase tracking-widest">
-                    Proteção Ativa contra IA
-                </span>
-            </div>
-
-            <h1 class="text-5xl md:text-8xl font-bold text-white mb-8 leading-[1.05] tracking-tighter max-w-5xl">
-                Proteja sua arte <br />
-                <span class="text-transparent bg-clip-text bg-gradient-to-r from-white via-white/80 to-white/40">
-                    antes de publicar.
-                </span>
-            </h1>
-
-            <p class="text-lg md:text-xl text-white/50 max-w-2xl mx-auto mb-12 leading-relaxed font-light">
-                PoisonInk aplica uma camada de proteção invisível, projetada para dificultar o uso indevido da sua identidade visual por sistemas de inteligência artificial.
-            </p>
-
-            <div class="flex flex-col sm:flex-row gap-6 items-center">
-
-                <!-- BOTÃO ALTERADO -->
-                <a href="https://art-shield-prime.lovable.app/auth" target="_blank"
-                   class="group relative flex items-center gap-3 px-8 py-4 bg-white text-[#0F0F14] rounded-full font-semibold text-sm uppercase tracking-wide overflow-hidden hover:scale-105 transition-all duration-300">
-                    <span>Começar agora</span>
-                    <i data-lucide="arrow-up-right" class="w-4 h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform"></i>
-                </a>
-
-                <button class="group flex items-center gap-3 px-8 py-4 bg-transparent text-white rounded-full font-semibold text-sm uppercase tracking-wide border border-white/10 hover:bg-white/5 transition-all duration-300">
-                    <span>Saiba mais</span>
-                </button>
-
-            </div>
+        <div class="trust-line" aria-label="Características">
+          <span data-i18n="local">Processamento local</span>
+          <span data-i18n="noAccount">Sem conta</span>
+          <span data-i18n="noUpload">Sem upload para servidor</span>
         </div>
+      </div>
+      <div class="preview-shell" aria-label="Prévia da interface PoisonInk">
+        <div class="orbit one" aria-hidden="true"></div>
+        <div class="orbit two" aria-hidden="true"></div>
+        <article class="preview-card">
+          <div class="preview-top"><span>POISONINK / STUDIO</span><span class="status" data-i18n="localMode">MODO LOCAL</span></div>
+          <div class="art-preview"></div>
+          <div class="preview-metrics">
+            <div class="metric"><small data-i18n="layer">camada</small><strong>Balanced</strong></div>
+            <div class="metric"><small data-i18n="format">formato</small><strong>PNG</strong></div>
+            <div class="metric"><small data-i18n="fingerprint">impressão</small><strong>SHA-256</strong></div>
+          </div>
+        </article>
+      </div>
     </section>
 
-    <!-- Footer CTA -->
-    <section class="py-32 md:py-48 relative z-10 bg-brand-dark border-t border-white/[0.02] overflow-hidden">
-
-        <div class="max-w-5xl mx-auto px-6 md:px-12 text-center relative fade-in-up">
-
-            <h2 class="text-5xl md:text-8xl font-bold text-white mb-8 leading-[1.05] tracking-tighter">
-                Sua arte.<br />
-                <span class="text-white/30">Suas regras.</span>
-            </h2>
-
-            <p class="text-xl text-white/40 mb-12 max-w-xl mx-auto font-light">
-                Junte-se a milhares de criadores que protegem seu portfólio com tecnologia de ponta.
-            </p>
-
-            <!-- BOTÃO ALTERADO -->
-            <a href="https://art-shield-prime.lovable.app/auth" target="_blank"
-               class="group relative flex items-center justify-center gap-3 px-10 py-5 mx-auto bg-white text-[#0F0F14] rounded-full font-semibold text-sm uppercase tracking-wide overflow-hidden hover:scale-105 transition-all duration-300">
-                <span>Proteger portfólio</span>
-                <i data-lucide="arrow-up-right" class="w-4 h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform"></i>
-            </a>
-
+    <section class="section" id="problema">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow" data-i18n="problemEye">Publicar é perder contexto</p>
+          <h2 data-i18n="problemTitle">Sua imagem viaja sem pedir licença.</h2>
         </div>
+        <p data-i18n="problemText">Depois que uma obra entra na internet, cópias podem circular sem autoria, contexto ou controle. Nenhuma ferramenta resolve isso sozinha, mas você pode publicar uma versão preparada e guardar uma prova técnica daquela exportação.</p>
+      </div>
+      <div class="cards">
+        <article class="card"><span class="card-index">01 / COPY</span><h3 data-i18n="card1Title">Cópias fora de contexto</h3><p data-i18n="card1Text">Uma imagem pode ser republicada sem crédito e separada da sua origem.</p></article>
+        <article class="card"><span class="card-index">02 / DATA</span><h3 data-i18n="card2Title">Coleta automatizada</h3><p data-i18n="card2Text">Robôs coletam grandes volumes de imagens. O artista raramente enxerga quando ou onde isso acontece.</p></article>
+        <article class="card"><span class="card-index">03 / TRACE</span><h3 data-i18n="card3Title">Autoria difícil de provar</h3><p data-i18n="card3Text">Sem um registro próprio, versões e datas se perdem no caminho.</p></article>
+      </div>
     </section>
 
-    <script>
-        lucide.createIcons();
+    <section class="section" id="metodo">
+      <div class="section-head">
+        <div><p class="eyebrow" data-i18n="methodEye">O processo</p><h2 data-i18n="methodTitle">Três passos. Nenhuma nuvem.</h2></div>
+        <p data-i18n="methodText">A imagem não sai do dispositivo. O resultado é uma nova cópia em PNG, pronta para download, com alterações discretas e uma impressão digital calculada no próprio navegador.</p>
+      </div>
+      <div class="process">
+        <article class="step"><h3 data-i18n="step1Title">Escolha a imagem</h3><p data-i18n="step1Text">PNG, JPG ou WEBP. A leitura acontece apenas na sua sessão atual.</p></article>
+        <article class="step"><h3 data-i18n="step2Title">Ajuste a camada</h3><p data-i18n="step2Text">Defina a intensidade e confira a prévia antes de gerar o arquivo.</p></article>
+        <article class="step"><h3 data-i18n="step3Title">Baixe e registre</h3><p data-i18n="step3Text">Exporte o PNG e guarde o hash SHA-256 como referência daquela versão.</p></article>
+      </div>
+    </section>
 
-        const navbar = document.getElementById('navbar');
+    <section class="section" id="limites">
+      <div class="proof">
+        <div class="proof-copy">
+          <div><p class="eyebrow" data-i18n="limitsEye">Sem marketing mágico</p><h2 data-i18n="limitsTitle">Proteção honesta começa pela transparência.</h2></div>
+          <p data-i18n="limitsText">PoisonInk é um protótipo de portfólio. Ele reprocessa a imagem, aplica uma camada visual discreta e cria um identificador criptográfico. Isso não garante bloqueio contra todos os modelos, scrapers ou usos indevidos.</p>
+        </div>
+        <div class="proof-code">
+          <div class="fingerprint"><b>LOCAL_PROCESSING = true</b><br>SERVER_UPLOAD = false<br>EXIF_PRESERVED = false<br>EXPORT_FORMAT = "image/png"<br>FINGERPRINT = "sha256: 9f3a…b71c"</div>
+        </div>
+      </div>
+    </section>
 
-        window.addEventListener('scroll', () => {
-            if (window.scrollY > 50) {
-                navbar.classList.add('bg-[#0F0F14]/80', 'backdrop-blur-xl', 'border-white/[0.05]', 'py-4');
-                navbar.classList.remove('bg-transparent', 'py-6', 'border-transparent');
-            } else {
-                navbar.classList.add('bg-transparent', 'py-6', 'border-transparent');
-                navbar.classList.remove('bg-[#0F0F14]/80', 'backdrop-blur-xl', 'border-white/[0.05]', 'py-4');
-            }
-        });
+    <section class="cta">
+      <p class="eyebrow" data-i18n="ctaEye">Sua obra continua sendo sua</p>
+      <h2 data-i18n="ctaTitle">Prepare antes de publicar.</h2>
+      <p data-i18n="ctaText">Use o estúdio gratuito no navegador. Sem cadastro, sem créditos e sem enviar sua arte para terceiros.</p>
+      <a class="button primary" href="studio/" data-i18n="ctaButton">Abrir PoisonInk Studio →</a>
+    </section>
+  </main>
 
-        const observerOptions = {
-            root: null,
-            rootMargin: '0px',
-            threshold: 0.1
-        };
-
-        const observer = new IntersectionObserver((entries, observer) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.style.animationPlayState = 'running';
-                    observer.unobserve(entry.target);
-                }
-            });
-        }, observerOptions);
-
-        document.querySelectorAll('.fade-in-up').forEach(el => {
-            el.style.animationPlayState = 'paused';
-            observer.observe(el);
-        });
-    </script>
-
+  <footer class="site-footer">
+    <span>POISONINK © 2026 · ALICIA BORGES</span>
+    <span data-i18n="footer">PROTÓTIPO INDEPENDENTE · PROCESSAMENTO LOCAL</span>
+  </footer>
 </body>
 </html>
-

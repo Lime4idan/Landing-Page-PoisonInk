@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="PoisonInk Studio — prepare e registre imagens localmente no navegador.">
+  <meta name="theme-color" content="#090b12">
+  <title>PoisonInk Studio</title>
+  <link rel="icon" href="../assets/logo.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../assets/styles.css">
+  <script src="../assets/studio.js" defer></script>
+</head>
+<body class="studio-body">
+  <a class="skip-link" href="#studioMain">Pular para o conteúdo</a>
+  <div class="studio-layout">
+    <aside class="studio-sidebar">
+      <a class="brand" href="../"><img src="../assets/logo.svg" alt=""><span>POISONINK</span></a>
+      <nav class="studio-nav" aria-label="Áreas do estúdio">
+        <button type="button" data-view="dashboard" aria-selected="true"><span class="nav-dot"></span>Visão geral</button>
+        <button type="button" data-view="protect" aria-selected="false"><span class="nav-dot"></span>Proteger imagem</button>
+        <button type="button" data-view="archive" aria-selected="false"><span class="nav-dot"></span>Arquivo local</button>
+        <button type="button" data-view="history" aria-selected="false"><span class="nav-dot"></span>Histórico</button>
+        <button type="button" data-view="settings" aria-selected="false"><span class="nav-dot"></span>Preferências</button>
+      </nav>
+      <div class="local-note"><strong>● LOCAL ONLY</strong>Suas imagens permanecem neste navegador. Nenhum arquivo é enviado ao PoisonInk.</div>
+      <a class="back-link" href="../">← Voltar ao site</a>
+    </aside>
+
+    <main class="studio-main" id="studioMain">
+      <header class="studio-topbar">
+        <div><h1 id="viewTitle">Seu estúdio</h1><p id="viewSubtitle">Um resumo real do que foi processado neste navegador.</p></div>
+        <span class="privacy-pill">● PROCESSAMENTO LOCAL</span>
+      </header>
+
+      <section class="studio-panel" data-panel="dashboard">
+        <div class="dashboard-grid">
+          <article class="stat-card"><small>imagens preparadas</small><strong id="statTotal">0</strong></article>
+          <article class="stat-card"><small>últimos 7 dias</small><strong id="statWeek">0</strong></article>
+          <article class="stat-card"><small>armazenamento local</small><strong id="statSize">0 <span>MB</span></strong></article>
+          <article class="panel-card dashboard-wide">
+            <div class="panel-title"><h2>Atividade recente</h2><button type="button" data-go="archive">ver arquivo →</button></div>
+            <div id="recentActivity" class="activity-empty">Seu histórico começa quando você exportar a primeira imagem.</div>
+          </article>
+          <article class="panel-card dashboard-side manifesto">
+            <blockquote>“A ferramenta certa não promete controle absoluto. Ela mostra exatamente o que faz.”</blockquote>
+            <span>POISONINK / PRINCÍPIO 01</span>
+          </article>
+        </div>
+      </section>
+
+      <section class="studio-panel" data-panel="protect" hidden>
+        <div class="protect-grid">
+          <label class="drop-zone" id="dropZone">
+            <input id="fileInput" type="file" accept="image/png,image/jpeg,image/webp">
+            <span class="drop-message">
+              <span class="drop-icon">＋</span>
+              <h2>Solte sua arte aqui</h2>
+              <p>ou clique para escolher · PNG, JPG ou WEBP · até 20 MB</p>
+            </span>
+            <img class="source-preview" id="sourcePreview" alt="Prévia da imagem escolhida">
+          </label>
+          <article class="panel-card controls-card">
+            <h2>Camada de publicação</h2>
+            <p>Crie uma cópia reprocessada. A alteração é sutil, mas fica incorporada aos pixels do novo PNG.</p>
+            <span class="field-label">Intensidade</span>
+            <div class="strength-options" role="group" aria-label="Intensidade da camada">
+              <button type="button" data-strength="light" aria-pressed="false">Leve</button>
+              <button type="button" data-strength="balanced" aria-pressed="true">Equilibrada</button>
+              <button type="button" data-strength="strong" aria-pressed="false">Forte</button>
+            </div>
+            <div class="control-readouts">
+              <div class="readout-line"><span>Alteração visual estimada</span><output id="visualOutput">baixa</output><div class="readout-bar"><span id="visualBar" style="width:38%"></span></div></div>
+              <div class="readout-line"><span>Densidade da camada</span><output id="densityOutput">52%</output><div class="readout-bar"><span id="densityBar" style="width:52%"></span></div></div>
+            </div>
+            <p class="processing-note">O arquivo é desenhado em um canvas local, recebe uma textura determinística e é exportado como um novo PNG sem os metadados originais.</p>
+            <button class="button primary" id="processButton" type="button" disabled>Gerar cópia protegida</button>
+          </article>
+        </div>
+
+        <article class="panel-card result-card" id="resultCard" hidden>
+          <div class="panel-title"><h2>Resultado</h2><span class="success-label">PRONTO PARA EXPORTAR</span></div>
+          <div class="result-grid">
+            <div class="result-image"><img id="resultPreview" alt="Imagem processada pelo PoisonInk"></div>
+            <div class="result-data">
+              <dl>
+                <div><dt>Arquivo</dt><dd id="resultName">—</dd></div>
+                <div><dt>Dimensões</dt><dd id="resultDimensions">—</dd></div>
+                <div><dt>Impressão SHA-256</dt><dd id="resultHash">—</dd></div>
+              </dl>
+              <div class="result-actions">
+                <a class="button primary small" id="downloadButton" href="#" download>Baixar PNG</a>
+                <button class="button secondary small" id="copyHashButton" type="button">Copiar impressão</button>
+                <button class="button secondary small" id="newImageButton" type="button">Nova imagem</button>
+              </div>
+            </div>
+          </div>
+        </article>
+      </section>
+
+      <section class="studio-panel" data-panel="archive" hidden>
+        <div id="archiveContent" class="empty-state">Nenhuma imagem armazenada neste navegador.<br><br><button class="button primary small" type="button" data-go="protect">Preparar primeira imagem</button></div>
+      </section>
+
+      <section class="studio-panel" data-panel="history" hidden>
+        <article class="panel-card history-wrap">
+          <table class="history-table">
+            <thead><tr><th>Arquivo</th><th>Data</th><th>Camada</th><th>Dimensões</th><th>Status</th></tr></thead>
+            <tbody id="historyRows"><tr><td colspan="5">Nenhum processamento registrado.</td></tr></tbody>
+          </table>
+        </article>
+      </section>
+
+      <section class="studio-panel" data-panel="settings" hidden>
+        <div class="settings-grid">
+          <article class="panel-card settings-card">
+            <h2>Assinatura do arquivo</h2>
+            <div class="form-field"><label for="artistName">Nome do artista</label><input id="artistName" type="text" maxlength="70" placeholder="Como você assina seu trabalho"></div>
+            <div class="form-field"><label for="signature">Identificador curto</label><input id="signature" type="text" maxlength="24" placeholder="@seu_usuario"></div>
+            <button class="button primary small" id="saveSettings" type="button">Salvar preferências</button>
+          </article>
+          <article class="panel-card settings-card">
+            <h2>Comportamento</h2>
+            <div class="toggle-row"><div><strong>Salvar miniaturas</strong><small>Permite rever e baixar imagens no arquivo local.</small></div><button class="toggle" id="saveThumbsToggle" type="button" aria-pressed="true" aria-label="Salvar miniaturas"><span></span></button></div>
+            <div class="toggle-row"><div><strong>Confirmar antes de limpar</strong><small>Evita perder o histórico por engano.</small></div><button class="toggle" id="confirmClearToggle" type="button" aria-pressed="true" aria-label="Confirmar antes de limpar"><span></span></button></div>
+            <button class="button secondary small" id="clearDataButton" type="button">Limpar dados locais</button>
+          </article>
+        </div>
+      </section>
+    </main>
+  </div>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+</body>
+</html>
